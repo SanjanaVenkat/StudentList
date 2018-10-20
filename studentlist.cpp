@@ -6,9 +6,7 @@
 #include <iomanip>
 
 using namespace std;
-//initial variables for response of user and to keep running until quit
-char response[20];
-bool running = true;
+
 //struct for student, holds their full name, student id, and gpa
 struct Student {
   char firstname[30];
@@ -44,15 +42,37 @@ void addStudent(vector <Student*>* studentlist) {
 //function to print students
 //prints out all students stored in studentlist
 void printStudents(vector <Student*>* studentlist) {
-  //cout << "Test print" << endl;
   for (int i = 0; i < studentlist->size(); i++) {
     Student* s = (*studentlist)[i];
     cout << s->firstname << " " << s->lastname << ", " << s->id << ", " << setprecision(3) << s->gpa <<endl;
   }
 }
+void deleteStudent(vector <Student*>* studentlist) {
+  int studentid;
+  int index;
+  bool idexists = false;
+  cout << "Enter student id" << endl;
+  cin >> studentid;
+   for (int i = 0; i < studentlist->size(); i++) {
+    Student* s = (*studentlist)[i];
+    if (s->id == studentid) {
+      index = i;
+      idexists = true;
+      break;
+    }
+  }
+   if (idexists == true) {
+   studentlist->erase(studentlist->begin()+index);
+   cout << "Deleted student" << endl;
+   }
+   else {
+     cout << "ID doesn't exist in student list" << endl;
+   }
+}
 
 //reads in response of user
 void getResponse(char response[10]) {
+  bool running = true;
   cout << "Enter ADD, PRINT, DELETE, or QUIT" << endl;
   cin >> response;
   running == true;
@@ -61,36 +81,39 @@ void getResponse(char response[10]) {
 int main() {
   //student list vector
   vector <Student*>* studentlist = new vector<Student*>();
+  //initial variable for response of user 
+char response[10];
+ bool running = true;
   //gets first response of user
 getResponse(response);
   while (running == true) {
     //runs if user enters add
-    while (response[0] == 'A'|| response[0] == 'a' && response[1] == 'D' || response[1] == 'd' && response[2] == 'D' || response[2] == 'd') {
-	cout << "Adding" << endl;
+    if (response[0] == 'A' && response[1] == 'D' && response[2] == 'D' ) {
 	addStudent(studentlist);
 	getResponse(response);
 	}
       //runs if user enters print
-      while (response[0] == 'P'|| response[0] == 'p' && response[1] == 'R' || response[1] == 'r' && response[2] == 'I' || response[2] == 'i' && response[3] == 'N' || response[3] == 'n' && response[4] == 'T' || response[4] == 't')
+     else if (response[0] == 'P' && response[1] == 'R' && response[2] == 'I' && response[3] == 'N' && response[4] == 'T')
      {
       printStudents(studentlist);
       getResponse(response);
            }
       //runs if user enters delete
-      while (response[0] == 'D'|| response[0] == 'd' && response[1] == 'E' || response[1] == 'e' && response[2] == 'L' || response[2] == 'l' && response[3] == 'E' || response[3] == 'e' && response[4] == 'T' || response[4] == 't' && response[5] == 'E' || response[5] == 'e') {
-      cout << "Deleting loop running" << endl;
+    else  if (response[0] == 'D'&& response[1] == 'E' && response[2] == 'L' && response[3] == 'E' && response[4] == 'T' && response[5] == 'E') {
+      deleteStudent(studentlist);
       getResponse(response);
       
       }
       //quits if user enters quit
-      if (response[0] == 'Q' || response[0] == 'q' && response[1] == 'U' || response[1] == 'u' && response[2] == 'I' || response[2] == 'i' && response[3] == 'T' || response[3] == 't') {
-	cout << "Quitting" << endl;
+    else if (response[0] == 'Q' && response[1] == 'U' && response[2] == 'I' && response[3] == 'T') {
+      cout << "Quitting" << endl;
 	return 0;
       }
-      else {
-	cout << "Enter a valid response" << endl;
-	getResponse(response);
-      }
+      //if invalid response, prompts user for new response
+    else {
+      cout << "Enter a valid response" << endl;
+      getResponse(response);
+    }
   }
     
 
