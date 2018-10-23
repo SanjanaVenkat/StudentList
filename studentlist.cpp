@@ -47,6 +47,10 @@ void printStudents(vector <Student*>* studentlist) {
     cout << s->firstname << " " << s->lastname << ", " << s->id << ", " << setprecision(3) << s->gpa <<endl;
   }
 }
+
+//function to delete a student
+//prompts user to enter student id for student to delete
+//deletes all data relating to student based on id
 void deleteStudent(vector <Student*>* studentlist) {
   int studentid;
   int index;
@@ -65,6 +69,7 @@ void deleteStudent(vector <Student*>* studentlist) {
    studentlist->erase(studentlist->begin()+index);
    cout << "Deleted student" << endl;
    }
+   //if id doesn't exist in student list, returns this message
    else {
      cout << "ID doesn't exist in student list" << endl;
    }
