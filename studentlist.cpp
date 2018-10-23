@@ -9,8 +9,8 @@ using namespace std;
 
 //struct for student, holds their full name, student id, and gpa
 struct Student {
-  char firstname[30];
-  char lastname[30];
+  char firstname[1000];
+  char lastname[1000];
   int id;
   float gpa;
 };
